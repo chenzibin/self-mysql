@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * BalanceTree
+ * B+ Tree
  *
  * @author chenzb
  * @date 2020/4/26

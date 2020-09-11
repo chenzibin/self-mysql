@@ -16,5 +16,10 @@ public enum AlgorithmEnum {
     /**
      * 迭代
      */
-    ITERATE;
+    ITERATE,
+
+    /**
+     * 莫里斯--线索
+     */
+    MORRIS;
 }

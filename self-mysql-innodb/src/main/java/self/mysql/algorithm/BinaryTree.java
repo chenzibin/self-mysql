@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * BinaryTree
+ * BST--Binary Search Tree
  *
  * @author chenzb
  * @date 2020/4/26
@@ -65,6 +65,23 @@ public class BinaryTree<E extends Comparable<E>> implements Tree<E> {
         return 0;
     }
 
+    /**
+     * example
+     * *******************************
+     *          2
+     *        /  \
+     *       1    3
+     * *******************************
+     * preOrder : 2 -> 1 -> 3
+     * inOrder  : 1 -> 2 -> 3
+     * postOrder: 1 -> 3 -> 2
+     * *******************************
+     *
+     *
+     * @param traversal 遍历方式
+     * @param algorithm 算法
+     * @return
+     */
     @Override
     public List<E> traversal(TraversalEnum traversal, AlgorithmEnum algorithm) {
         if (root == null) {
@@ -75,6 +92,8 @@ public class BinaryTree<E extends Comparable<E>> implements Tree<E> {
                 return recursiveTraversal(traversal);
             case ITERATE:
                 return iterateTraversal(traversal);
+            case MORRIS:
+                return morrisTraversal(traversal);
             default:
                 throw new IllegalArgumentException("not available algorithm: " + algorithm);
         }
@@ -98,12 +117,64 @@ public class BinaryTree<E extends Comparable<E>> implements Tree<E> {
             case PRE_ORDER:
                 return preOrderTraversal();
             case IN_ORDER:
-                return inorderMorrisTraversal();
+                return inOrderTraversal();
             case POST_ORDER:
                 return postOrderTraversal();
             default:
                 throw new IllegalArgumentException("not available traversal: " + traversal);
         }
+    }
+
+    private List<E> morrisTraversal(TraversalEnum traversal) {
+        switch (traversal) {
+            case PRE_ORDER:
+                return preOrderMorrisTraversal();
+            case IN_ORDER:
+                return inOrderMorrisTraversal();
+            case POST_ORDER:
+                return postOrderMorrisTraversal();
+            default:
+                throw new IllegalArgumentException("not available traversal: " + traversal);
+        }
+    }
+
+    private List<E> preOrderMorrisTraversal() {
+        return null;
+    }
+
+    private List<E> inOrderMorrisTraversal() {
+        /*
+         * 空间复杂度: O(1)
+         * 遍历顺序： left -> root -> right
+         *
+         * 深度读取左节点-对所有读取到的左节点，通过其右节点链接上父节点
+         * 左节点-通过链接回父节点-右节点-通过链接回父节点的父节点
+         */
+        List<E> nodes = new ArrayList<>();
+        Node<E> current = root;
+        while (current != null) {
+            while (current.left != null) {
+                Node<E> parent = current;
+                current = parent.left;
+                while (current.right != parent && current.right != null) {
+                    current = current.right;
+                }
+                if (current.right == parent) {
+                    current.right = null;
+                    current = parent;
+                    break;
+                }
+                current.right = parent;
+                current = parent.left;
+            }
+            nodes.add(current.data);
+            current = current.right;
+        }
+        return nodes;
+    }
+
+    private List<E> postOrderMorrisTraversal() {
+        return null;
     }
 
     private List<E> preOrderTraversal() {
@@ -141,33 +212,6 @@ public class BinaryTree<E extends Comparable<E>> implements Tree<E> {
                 while (node.left != null) {
                     stack.push(node.left);
                     node = node.left;
-                }
-            }
-        }
-        return nodes;
-    }
-
-    private List<E> inorderMorrisTraversal() {
-        List<E> nodes = new ArrayList<>();
-        Node<E> cur = root;
-        Node<E> prev = null;
-        while (cur != null) {
-            if (cur.left == null) {
-                nodes.add(cur.data);
-                cur = cur.right;
-            } else {
-                // find predecessor
-                prev = cur.left;
-                while (prev.right != null && prev.right != cur) {
-                    prev = prev.right;
-                }
-                if (prev.right == null) {
-                    prev.right = cur;
-                    cur = cur.left;
-                } else {
-                    prev.right = null;
-                    nodes.add(cur.data);
-                    cur = cur.right;
                 }
             }
         }

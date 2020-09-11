@@ -58,6 +58,9 @@ public class BinaryTreeTest {
     }
 
     private void out(String format, List<Integer> nodeList) {
+        if (nodeList == null) {
+            return;
+        }
         String nodeString = nodeList.stream().map(Object::toString).collect(Collectors.joining("、"));
         System.out.println(String.format(format, nodeString));
     }

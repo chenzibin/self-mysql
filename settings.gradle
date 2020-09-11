@@ -1,0 +1,2 @@
+rootProject.name = 'self-mysql'
+include('self-mysql-innodb')
