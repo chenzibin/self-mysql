@@ -1,2 +1,4 @@
 rootProject.name = 'self-mysql'
-include('self-mysql-innodb')
+include 'self-mysql-innodb'
+include 'self-mysql-base-antlr'
+
