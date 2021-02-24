@@ -182,8 +182,11 @@ public class Page {
         if (this.type == PageType.FIL_PAGE_INDEX) {
             records = new ArrayList<>();
             boolean hasNextRecord = true;
+            int nextRecordOffset = reader.getOffset();
+            // 改为链式读取，当读取到 SUPREMUM 时停止
             while (hasNextRecord) {
-                Row record = new Row(reader);
+                Row record = new Row(reader, nextRecordOffset);
+                nextRecordOffset = record.getNextRecord();
                 if (record.getRecordType() == RecordType.INFIMUM) {
                     this.infimum = record;
                 } else if (record.getRecordType() == RecordType.SUPREMUM) {

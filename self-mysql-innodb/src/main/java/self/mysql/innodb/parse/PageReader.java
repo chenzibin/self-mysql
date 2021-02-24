@@ -27,6 +27,10 @@ public class PageReader {
         return b;
     }
 
+    public byte readByte(int offset) {
+        return data[offset];
+    }
+
     public byte[] readBytes(int len) {
         byte[] bytes = Arrays.copyOfRange(data, offset, offset + len);
         offset += len;
@@ -59,6 +63,11 @@ public class PageReader {
 
     public String readString(int len) {
         byte[] bytes = readBytes(len);
+        return new String(bytes);
+    }
+
+    public String readString(int from, int len) {
+        byte[] bytes = readBytes(from, len);
         return new String(bytes);
     }
 
