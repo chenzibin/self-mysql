@@ -1,9 +1,14 @@
 package self.mysql.innodb.parse;
 
+import java.util.stream.Collectors;
 import lombok.Data;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
+import self.mysql.innodb.parse.entity.ExtentDescriptorEntry;
+import self.mysql.innodb.parse.entity.ListBaseNode;
+import self.mysql.innodb.parse.entity.SegmentHeader;
+import self.mysql.innodb.parse.entity.SpaceFlags;
 
 /**
  * Buffer
@@ -49,6 +54,12 @@ public class PageReader {
         return readNumber(4);
     }
 
+    public int[] readInts(int size) {
+        int[] values = new int[size];
+        IntStream.range(0, size).forEach(i -> values[i] = readInt());
+        return values;
+    }
+
     public long readLong() {
         long big = (long) readInt() << 32;
         int little = readInt();
@@ -76,5 +87,24 @@ public class PageReader {
         return readString(len);
     }
 
+    public SegmentHeader readSegmentHeader() {
+        return new SegmentHeader(this);
+    }
+
+    public ListBaseNode readListBaseNode() {
+        return new ListBaseNode(this);
+    }
+
+    public SpaceFlags readSpaceFlags() {
+        return new SpaceFlags(this);
+    }
+
+    public ExtentDescriptorEntry readExtentDescriptorEntry() {
+        return new ExtentDescriptorEntry(this);
+    }
+
+    public void pointTo(int offset, boolean reverse) {
+        this.offset = reverse ? data.length - offset : offset;
+    }
 
 }

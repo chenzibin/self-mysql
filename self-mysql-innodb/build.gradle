@@ -1,5 +1,0 @@
-dependencies {
-    compile group: 'org.apache.sshd', name: 'sshd-scp', version: '2.6.0'
-    compile group: 'ch.ethz.ganymed', name: 'ganymed-ssh2', version: '262'
-
-}

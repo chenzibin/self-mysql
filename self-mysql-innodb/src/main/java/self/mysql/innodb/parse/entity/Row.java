@@ -3,10 +3,6 @@ package self.mysql.innodb.parse.entity;
 import lombok.Data;
 import self.mysql.innodb.parse.PageReader;
 
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 /**
  * Row
  *
@@ -24,7 +20,7 @@ public class Row {
 
     private int deletedFlag;
 
-    private int minRecordFLag;
+    private int minRecordFlag;
 
     private int ownedNum;
 
@@ -56,7 +52,7 @@ public class Row {
         this.unknown1 = recordHeader[0] >> 7;
         this.unknown2 = (recordHeader[0] & 0x40) >> 6;
         this.deletedFlag = (recordHeader[0] & 0x20) >> 5;
-        this.minRecordFLag = (recordHeader[0] & 0x10) >> 4;
+        this.minRecordFlag = (recordHeader[0] & 0x10) >> 4;
         this.ownedNum = recordHeader[0] & 0x0f;
         this.heapNo = recordHeader[1] << 5 + recordHeader[2] >> 3;
         this.recordType = RecordType.ofValue(recordHeader[2] & 0x07);

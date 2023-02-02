@@ -43,7 +43,7 @@ public enum RecordType {
      */
     RETAIN(4);
 
-    private int value;
+    private final int value;
 
     RecordType(int value) {
         this.value = value;
