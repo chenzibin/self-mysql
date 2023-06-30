@@ -20,7 +20,7 @@ public class ExtentDescriptorEntry {
     private long segmentId;
 
     /**
-     * List Node(12b):这个部分可以将若干个XDES Entry结构串联成一个链表
+     * List Node(12b):这个部分可以将若干个相同state的XDES Entry串联成一个链表。
      */
     private ListNode listNode;
 

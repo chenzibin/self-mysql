@@ -4,7 +4,8 @@ import lombok.Data;
 import self.mysql.innodb.parse.PageReader;
 
 /**
- * List Node(12b):这个部分可以将若干个XDES Entry结构串联成一个链表
+ * List Node(12b):这个部分可以将若干个相同state的XDES Entry串联成一个链表。
+ * 每种类型{@link ExtentState}有对应的链表，通过ListBaseNode定位头尾ListNode, 再通过ListNode定位前后的ListNode
  *
  * @author chenzibin
  * @date 2023/2/2

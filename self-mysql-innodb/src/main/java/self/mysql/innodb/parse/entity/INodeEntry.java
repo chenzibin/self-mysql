@@ -5,6 +5,8 @@ import lombok.Data;
 import self.mysql.innodb.parse.PageReader;
 
 /**
+ * INODE Entry(192): 段描述信息
+ *
  * @author chenzibin
  * @date 2023/2/2
  */
@@ -22,17 +24,17 @@ public class INodeEntry {
     private int notFullUsedNum;
 
     /**
-     * List Base Node For Free List(16)
+     * List Base Node For Free List(16): 该段FREE链表的基节点
      */
     private ListBaseNode freeListBaseNode;
 
     /**
-     * List Base Node For Not Full List(16)
+     * List Base Node For Not Full List(16): 该段Not Full链表的基节点
      */
     private ListBaseNode notFullListBaseNode;
 
     /**
-     * List Base Node For Full List(16)
+     * List Base Node For Full List(16): 该段Full链表的基节点
      */
     private ListBaseNode fullListBaseNode;
 

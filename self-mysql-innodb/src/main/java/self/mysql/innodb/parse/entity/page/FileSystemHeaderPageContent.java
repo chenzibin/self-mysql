@@ -1,18 +1,21 @@
 package self.mysql.innodb.parse.entity.page;
 
 import lombok.Data;
+import self.mysql.common.PageSpi;
 import self.mysql.innodb.parse.PageReader;
 import self.mysql.innodb.parse.entity.ExtentDescriptorEntry;
 import self.mysql.innodb.parse.entity.ListBaseNode;
+import self.mysql.innodb.parse.entity.PageType;
 import self.mysql.innodb.parse.entity.SpaceFlags;
 
 /**
- * 表空间头部信息
+ * 表空间头部信息，表空间的第一个页面, 第一个组的第一个页面，整个表空间仅一个该类型页面
  *
  * @author chenzibin
  * @date 2023/2/1
  */
 @Data
+@PageSpi(PageType.FIL_PAGE_TYPE_FSP_HDR)
 public class FileSystemHeaderPageContent implements PageContent {
 
     /* --------------------File Space Header (112) -------------------- */
@@ -69,12 +72,12 @@ public class FileSystemHeaderPageContent implements PageContent {
     private long nextUnusedSegmentId;
 
     /**
-     * List Base Node for SEG_INODES_FULL List(16): SEG_INODES_FULL链表的基节点
+     * List Base Node for SEG_INODES_FULL List(16): SEG_INODES_FULL链表的基节点。该链表中的INODE类型的页面中已经没有空闲空间来存储额外的INODE Entry结构了。
      */
     private ListBaseNode segInodesFullBaseNode;
 
     /**
-     * List Base Node for SEG_INODES_FREE List(16): SEG_INODES_FREE链表的基节点
+     * List Base Node for SEG_INODES_FREE List(16): SEG_INODES_FREE链表的基节点.该链表中的INODE类型的页面中还有空闲空间来存储额外的INODE Entry结构了。
      */
     private ListBaseNode segInodesFreeBaseNode;
 

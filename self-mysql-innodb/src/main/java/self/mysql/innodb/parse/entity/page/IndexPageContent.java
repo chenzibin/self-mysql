@@ -3,8 +3,10 @@ package self.mysql.innodb.parse.entity.page;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
+import self.mysql.common.PageSpi;
 import self.mysql.innodb.parse.PageReader;
 import self.mysql.innodb.parse.entity.PageDirection;
+import self.mysql.innodb.parse.entity.PageType;
 import self.mysql.innodb.parse.entity.RecordType;
 import self.mysql.innodb.parse.entity.Row;
 import self.mysql.innodb.parse.entity.SegmentHeader;
@@ -16,6 +18,7 @@ import self.mysql.innodb.parse.entity.SegmentHeader;
  * @date 2023/2/1
  */
 @Data
+@PageSpi(PageType.FIL_PAGE_INDEX)
 public class IndexPageContent implements PageContent {
 
     /* --------------------Page Header-------------------- */
@@ -72,7 +75,7 @@ public class IndexPageContent implements PageContent {
     private long maxTrxId;
 
     /**
-     * PAGE_LEVEL(2): 当前页在索引树中的位置, 0x00代表叶节点, 即叶结点总是在第0层
+     * PAGE_LEVEL(2): 当前页在B+树中所处的层级, 0x00代表叶节点, 即叶结点总是在第0层
      */
     private int level;
 
@@ -82,12 +85,12 @@ public class IndexPageContent implements PageContent {
     private long indexId;
 
     /**
-     * PAGE_BTR_SEG_LEAF(10): B+树数据页非叶节点所在段的segment header, 该值仅在B+Tree的Root页中定义
+     * PAGE_BTR_SEG_LEAF(10): B+树数据页叶节点所在段的segment header, 该值仅在B+Tree的Root页中定义
      */
     private SegmentHeader leaf;
 
     /**
-     * PAGE_BTR_SEG_TOP(10):B+树数据页所在段的segment header, 该值仅在B+Tree的Root页中定义
+     * PAGE_BTR_SEG_TOP(10):B+树数据页非叶节点所在段的segment header, 该值仅在B+Tree的Root页中定义
      */
     private SegmentHeader top;
 

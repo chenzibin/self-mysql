@@ -28,7 +28,6 @@ public class ListBaseNode {
      */
     private int firstNodeOffset;
 
-
     /**
      * Last Node Page Number(4): 该链表的尾节点所在页号
      */
